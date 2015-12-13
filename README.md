@@ -1,43 +1,33 @@
-This is a template you can use for your final project. Fill in each section with information on your own project.
-
 ## Short Description
 
-Give a short, 1-2 paragraph description of your project. Focus on the code, not the theoretical / substantive / academic side of things. 
+I've adapted Neal Caren's script to split judicial opinions downloaded from Lexis Nexis. I use the adapted sript to combine
+opinions by the US Supreme Court from the year 2005 with metadata from the Supreme Court Database for the same year into a single dataset. As an example of what could be done with these data, I've also produced some word clouds.
 
 ## Dependencies
-
-List what software your code depends on, as well as version numbers, like so:.
 
 1. R, version 3.1
 2. Python 2.7, Anaconda distribution.
 
-(In your code itself, includes commands that install required packages.)
-
 ## Files
-
-List all other files contained in the repo, along with a brief description of each one, like so:
 
 ### Data
 
-1. polity.csv: The PolityVI dataset, available here: http://www.systemicpeace.org/inscrdata.html
-2. nyt.csv: Contains data from the New York Times API collected via collect-nyt.ipynb . Includes information on all articles containing the term "Programmer Cat", 1980-2010.
-3. analysis-dataset.csv: The final Analysis Dataset derived from the raw data above. It includes country-year values for all UN countries 1980-2010, with observations for the following variables: 
-    - *ccode*: Correlates of War numeric code for country observation
-    - *year*: Year of observation
-    - *polity*: PolityVI score
-    - *nyt*: Number of New York Times articles about "Programmer Cat"
+1. SCDB_2015_01_caseCentered_LegalProvision.csv: Most recent dataset from the Supreme Court Database ("case centered data""), available here: http://supremecourtdatabase.org/data.php 
+2. U_S__Supreme_Court_Cases,_Lawyers'_Edition2015-12-08_20-42.TXT: Contains the text of every U.S. Supreme Court opinion delivered in calendar year 2005 (not to be confused with the 2005 SCOTUS term) collected via lexis nexis.
+3. U_S__Supreme_Court_Cases,_Lawyers'_Edition2015-12-08_20-42.csv: The opinion dataset derived by the python script below from the raw data in the text file above. Tne dataset includes the name of each case, the "US Cite" docket number of the case, and the first 30,000 characters of the opinion. 
 
 ### Code
 
-1. 01_collect-nyt.py: Collects data from New York Times API and exports data to the file nyt.csv
-2. 02_merge-data.R: Loads, cleans, and merges the raw Polity and NYT datasets into the Analysis Dataset.
-2. 03_analysis.R: Conducts descriptive analysis of the data, producing the tables and visualizations found in the Results directory.
+1. split_ln_dva.py: My adaptation of Neal Caren's script. It takes the text file above (raw data), splits on the opinions and produces the csv dataset in 3 above.
+2. OR_Final_Project.R: Loads, cleans, and merges the raw Supreme Court Database dataset (1 above) and my opinion dataset (3 above) into the final combined data set below (1 below). It also does a text analysis of the opinions and produces the pdf word clouds in 2-4 below.
 
 ### Results
 
-1. coverage-over-time.jpeg: Graphs the number of articles about each region over time.
-2. regression-table.txt: Summarizes the results of OLS regression, modelling *nyt* on a number of covariates.
+1. Supreme_Court_2005_Opinions.csv: Final dataset which includes the metadata from the Supreme Court Database and the text of the opinions.
+2. all justices.pdf: Word cloud showing distinctive terms used by all Justices in opinions delivered in 2005.
+3. Scalia.pdf: Word cloud showing distinctive terms used by Justice Scalia in opinions delivered in 2005.
+4. Other than Scalia.pdf: Word cloud showing distinctive terms used by Justices other than Justice Scalia in opinions delivered in 2005.
 
 ## More Information
 
-Include any other details you think your user might need to reproduce your results. You may also include other information such as your contact information, credits, etc.
+Due to cell size limitations, only the first 30,000 characters (approx. 50 pages) of each opinion are analyzed. This should be easily fixable, I just didn't have the time. Also, word clouds might be more interesting if we used a specialized vocabulary dictionary for stemming and cleaning (a la Rice and Zorn (2013)). Please feel free to contact me with any questions, concerns or comments at: ogidotradicatberkeleydotedu.
